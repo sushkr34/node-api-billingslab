@@ -87,7 +87,8 @@ export default ({ config, db }) => {
           req.body.forEach(elements => {
             response.rows.forEach(item =>{
               if(elements.product_id==item.product_id){
-                arr.push(elements.qty * item.price);
+                arr.push({"product id :" : elements.product_id , "quantity : " :elements.qty ,
+                "estimated price :":elements.qty * item.price});
               }
             });
           });
