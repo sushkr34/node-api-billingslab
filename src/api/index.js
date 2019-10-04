@@ -80,15 +80,20 @@ export default ({ config, db }) => {
   api.get("/billingslab_est", (req, res) => {
     // console.log(req.body, 'body');
     let arr = [];
-      db.query(`select * from billingslab where status=${true} `, (err, response) => {
+    let value=[];
+    req.body.forEach(items =>{
+      value.push(items.product_id);
+    });
+    console.log(value)
+      db.query(`select * from billingslab where product_id in (${value}) and  status=${true} `, (err, response) => {
         if (err) {
           console.log(err.stack);
         } else {
           req.body.forEach(elements => {
             response.rows.forEach(item =>{
               if(elements.product_id==item.product_id){
-                arr.push({"product id :" : elements.product_id , "quantity : " :elements.qty ,
-                "estimated price :":elements.qty * item.price});
+                arr.push({"product id " : elements.product_id , "quantity  " :elements.qty ,
+                "estimated price ":elements.qty * item.price});
               }
             });
           });
